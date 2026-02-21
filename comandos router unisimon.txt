@@ -1,0 +1,28 @@
+comandos router unisimon
+
+en modo privi
+conf t 
+no ip domain-lookup
+service password-encryption  oculta la contras
+enable secret cisco
+hostname R1
+int  fa0/0
+ip add 10.0.0.3 255.0.0.0
+no shutdown
+R1(config-if)#int f0/1
+R1(config-if)#ip add 172.16.0.3 255.255.0.0
+R1(config)#line con 0
+R1(config-line)#password cisco
+R1(config-line)#login
+R1(config)#line vty 0 4
+R1(config-line)#password cisco
+R1(config-line)#login
+end finaliza 
+wr guardar datos
+
+
+comandos de router a router
+int se0/0/0 
+ip add 15.0.0.1 255.0.0.0 sede puerto-colombia
+ip add 15.0.0.2 255.0.0.0 sede unisimon
+no shut
