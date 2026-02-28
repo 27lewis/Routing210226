@@ -26,3 +26,10 @@ int se0/0/0
 ip add 15.0.0.1 255.0.0.0 sede puerto-colombia
 ip add 15.0.0.2 255.0.0.0 sede unisimon
 no shut
+
+
+sede1
+conf t
+ip route 15.0.0.0 255.0.0.0 s0/0/0 
+ip route 172.20.0.0 255.255.0.0 s0/0/0
+
