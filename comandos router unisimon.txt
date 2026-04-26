@@ -33,3 +33,70 @@ conf t
 ip route 15.0.0.0 255.0.0.0 s0/0/0 
 ip route 172.20.0.0 255.255.0.0 s0/0/0
 
+
+
+
+--------------------------------------------------------------
+
+
+Router>ena
+Router#conf t
+Router(config)#no ip domain-lookup
+Router(config)#hostname R1
+R1(config)#service password-encryption
+R1(config)#enable secret cisco
+R1(config)#line con 0
+R1(config-line)#password cisco
+R1(config-line)#login
+R1(config-line)#exit
+R1(config)#line vty 0 4
+R1(config-line)#password cisco
+R1(config-line)#login
+R1(config-line)#exit
+
+
+R1>ena
+R1#conf t
+R1(config)#interface g0/1
+R1(config-if)#ip address 172.30.10.1 255.255.255.0
+R1(config-if)#description LAN R1
+R1(config-if)#no shutdown
+
+
+R1(config-if)#interface s0/0/0
+R1(config-if)#ip address 10.1.1.1 255.255.255.252
+R1(config-if)#clock rate 56000
+R1(config-if)#no shutdown
+
+
+R1(config)#router rip
+R1(config-router)#version 2
+R1(config-router)#passive-interface g0/1
+R1(config-router)#network 172.30.0.0
+R1(config-router)#network 10.0.0.0
+R1(config-router)#no auto-summary
+
+
+R3(config)#router rip
+R3(config-router)#version 2
+R3(config-router)#passive-interface g0/1
+R3(config-router)#network 172.30.0.0
+R3(config-router)#network 10.0.0.0
+R3(config-router)#no auto-summary
+
+
+R2(config)# router rip
+R2(config-router)# version 2
+R2(config-router)# network 10.0.0.0
+R2(config-router)# no auto-summary
+
+
+R2(config)#ip route 0.0.0.0 0.0.0.0 209.165.201.2
+R2(config)#router rip
+R2(config-router)#default-information originate
+
+
+Switch(config)#hostname S1
+S1(config)#vlan 1
+S1(config-vlan)#exit
+
