@@ -100,3 +100,37 @@ Switch(config)#hostname S1
 S1(config)#vlan 1
 S1(config-vlan)#exit
 
+---------------------------------------------------------------------------------
+proyecto final 
+
+Router> enable
+Router# configure terminal
+Router(config)# hostname Sede_1
+Router(config)# service password-encryption  # Cifrado de contraseñas 
+line console 0
+password cisco
+login
+exit
+Router(config)# enable secret cisco          # Contraseña de modo privilegiado
+Router(config)# line vty 0 4                 # Configuración de Telnet 
+Router(config-line)# password cisco
+Router(config-line)# login
+Router(config-line)# exit
+
+Router(config)# interface f0/0
+Router(config-if)# ip address 172.20.0.1 255.255.255.128
+Router(config-if)# no shutdown
+
+interface f0/1
+ip address 172.20.0.129 255.255.255.240
+no shutdown
+
+interface s0/0/0
+ip address 172.20.3.1 255.255.255.252
+clock rate 64000  # Solo si es el extremo DCE 
+no shutdown
+
+router eigrp 100
+network 172.20.0.0 0.0.255.255
+no auto-summary
+
